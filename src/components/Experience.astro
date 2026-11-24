@@ -1,0 +1,24 @@
+---
+import { copy, type Lang } from "../i18n/site";
+const { lang } = Astro.props as { lang: Lang };
+const t = copy[lang];
+---
+
+<section class="wrap section">
+  <p class="eyebrow">
+    <span>03 /</span> {t.trajectory}
+  </p>
+  <h2>{t.experience}</h2>
+  <div class="timeline">
+    {["Freelance", "Albacea S.A.S."].map((org, i) => (
+      <article>
+        <div class="mono">{t.dates[i]}</div>
+        <div>
+          <h3>{t.roles[i]}</h3>
+          <b>{org}</b>
+          <p>{t.jobs[i]}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

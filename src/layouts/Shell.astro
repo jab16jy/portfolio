@@ -1,0 +1,186 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "../styles/global.css";
+import Icon from "../components/Icon.astro";
+import { copy, github, name, pathFor, sections, type Lang } from "../i18n/site";
+interface Props {
+  lang: Lang;
+  path: string;
+  title: string;
+  description: string;
+  notFound?: boolean;
+}
+const { lang, path, title, description, notFound = false } = Astro.props;
+const t = copy[lang],
+  other = lang === "es" ? "en" : "es";
+const canonical =
+  Astro.site && !notFound
+    ? new URL(pathFor(lang, path), Astro.site)
+    : undefined;
+---
+
+<!doctype html>
+<html lang={lang} id="top">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — {name}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/icons/jb.svg" type="image/svg+xml" />
+    {notFound && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical &&
+      (["es", "en", "x-default"] as const).map((l) => (
+        <link
+          rel="alternate"
+          hreflang={l}
+          href={new URL(pathFor(l === "en" ? "en" : "es", path), Astro.site)}
+        />
+      ))}
+    <meta property="og:title" content={`${title} — ${name}`} />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {!path && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name,
+          jobTitle: "Software Developer",
+          sameAs: [github],
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Soledad",
+            addressRegion: "Atlántico",
+            addressCountry: "CO",
+          },
+        })}
+      />
+    )}
+    <script is:inline>
+      let initialTheme = matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      try {
+        const saved = localStorage.getItem("jb-theme");
+        if (saved === "light" || saved === "dark") initialTheme = saved;
+      } catch {
+        /* use system preference */
+      }
+      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">
+      {t.skip}
+    </a>
+    <header class="mast">
+      <div class="wrap bar">
+        <a
+          class="brand"
+          href={pathFor(lang)}
+          aria-label={`JB. Johan Borrero — ${t.nav[0]}`}
+        >
+          <span class="mark">
+            JB<span>.</span>
+          </span>
+          <b>Johan Borrero</b>
+        </a>
+        <nav
+          id="primary-nav"
+          aria-label={lang === "es" ? "Principal" : "Primary"}
+        >
+          {sections.map((s, i) => (
+            <a
+              aria-current={
+                path === s || (s === "projects" && path.startsWith("projects/"))
+                  ? "page"
+                  : undefined
+              }
+              href={pathFor(lang, s)}
+            >
+              {t.nav[i]}
+            </a>
+          ))}
+        </nav>
+        <div class="tools">
+          <a
+            data-language-switch
+            aria-label={`${other.toUpperCase()} — ${t.other}`}
+            lang={other}
+            hreflang={other}
+            href={pathFor(other, notFound ? "" : path)}
+          >
+            {other.toUpperCase()}
+          </a>
+          <button
+            type="button"
+            data-theme-toggle
+            aria-label={t.theme}
+            title={t.theme}
+          >
+            <Icon name="theme" />
+          </button>
+          <a class="github-nav" href={github} aria-label="GitHub">
+            <Icon name="github" />
+          </a>
+          <button
+            type="button"
+            data-menu-toggle
+            aria-label={t.menu}
+            aria-controls="primary-nav"
+            aria-expanded="false"
+          >
+            <Icon name="menu" />
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-foot">
+      <div class="wrap">
+        <span>© 2026 · Johan Borrero</span>
+        <a href="#top">{t.back} ↑</a>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>(
+        "[data-theme-toggle]",
+      );
+      toggle?.addEventListener("click", () => {
+        const v =
+          document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = v;
+        try {
+          localStorage.setItem("jb-theme", v);
+        } catch {
+          /* storage optional */
+        }
+      });
+      const menu =
+        document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+      const nav = document.querySelector("#primary-nav");
+      function expand(open: boolean) {
+        menu?.setAttribute("aria-expanded", String(open));
+        nav?.classList.toggle("open", open);
+      }
+      menu?.addEventListener("click", () =>
+        expand(menu.getAttribute("aria-expanded") !== "true"),
+      );
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && nav?.classList.contains("open")) {
+          expand(false);
+          menu?.focus();
+        }
+      });
+    </script>
+  </body>
+</html>

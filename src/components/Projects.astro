@@ -1,0 +1,106 @@
+---
+import { getEntry } from "astro:content";
+import Icon from "./Icon.astro";
+import {
+  copy,
+  ids,
+  names,
+  repos,
+  github,
+  pathFor,
+  type Lang,
+} from "../i18n/site";
+const { lang, compact = false } = Astro.props as {
+  lang: Lang;
+  compact?: boolean;
+};
+const t = copy[lang];
+const ProjectHeading = compact ? "h3" : "h2";
+const entries = await Promise.all(
+  ids.map((id) => getEntry("projects", `${lang}/${id}`)),
+);
+---
+
+<section class="wrap section project-section">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">
+        <span>01 /</span> {t.archive}
+      </p>
+      {compact ? <h2>{t.projects}</h2> : <h1>{t.projects}</h1>}
+    </div>
+    {compact && (
+      <a class="textlink" href={pathFor(lang, "projects")}>
+        {t.all}
+        <Icon name="arrow" />
+      </a>
+    )}
+  </div>
+  {!compact && <p class="lede">{t.projectsLead}</p>}
+  <div class="project-list">
+    {entries.map(
+      (entry, i) =>
+        entry && (
+          <article>
+            <div class="project-meta">
+              <span class="eyebrow">
+                P—0{i + 1} / {t.categories[i]}
+              </span>
+              <span class="state">{t.states[i]}</span>
+            </div>
+            <div class="project-preview">
+              {entry.data.image ? (
+                <img
+                  src={entry.data.image}
+                  alt={entry.data.imageAlt}
+                  loading="lazy"
+                  width="720"
+                  height="408"
+                />
+              ) : (
+                <div class="mini-chart">
+                  <span class="mini-label">
+                    FIG. 0{i + 1} / {lang === "es" ? "FLUJO" : "FLOW"}
+                  </span>
+                  <div>
+                    {(i === 1
+                      ? ["WPF", "MVVM", "SQLite"]
+                      : ["FAO-56", "API", "PWA"]
+                    ).map((n, k) => (
+                      <span>
+                        {k > 0 && <i>→</i>}
+                        <b>{n}</b>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <ProjectHeading class="project-name">
+              <a href={pathFor(lang, `projects/${ids[i]}`)}>{names[i]}</a>
+            </ProjectHeading>
+            <p>{t.brief[i]}</p>
+            <p class="finding">{entry.data.finding}</p>
+            <ul class="tags" aria-label="Stack">
+              {entry.data.stack.slice(0, 4).map((v) => (
+                <li>{v}</li>
+              ))}
+            </ul>
+            <div class="project-links">
+              <a class="textlink" href={pathFor(lang, `projects/${ids[i]}`)}>
+                {t.study}
+                <Icon name="arrow" />
+              </a>
+              <a
+                href={`${github}/${repos[i]}`}
+                aria-label={`GitHub · ${names[i]}`}
+              >
+                <Icon name="github" />
+              </a>
+              {entry.data.demo && <a href={entry.data.demo}>{t.visit} ↗</a>}
+            </div>
+          </article>
+        ),
+    )}
+  </div>
+</section>

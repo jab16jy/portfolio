@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.astro/
+test-results/
+playwright-report/
+.codegraph/
+.atl/
+.engram/
+.env*
+*.pem
+*.key
+*.p12
+*.pfx

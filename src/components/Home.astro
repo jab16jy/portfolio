@@ -1,0 +1,92 @@
+---
+import { copy, github, pathFor, type Lang } from "../i18n/site";
+import Projects from "./Projects.astro";
+import Experience from "./Experience.astro";
+import Contact from "./Contact.astro";
+import Icon from "./Icon.astro";
+import Plate from "./Plate.astro";
+const { lang } = Astro.props as { lang: Lang };
+const t = copy[lang];
+---
+
+<div class="wrap">
+  <div class="folio">
+    <span>
+      <i></i>
+      {t.folio}
+    </span>
+    <span>
+      <Icon name="location" size={14} />
+      {t.location}
+    </span>
+  </div>
+  <section class="hero">
+    <div>
+      <h1>
+        Johan Alexander
+        <br />
+        Borrero Méndez<span class="period">.</span>
+      </h1>
+      <p class="role">
+        Software Developer <span>/</span> AI-Assisted Software Engineering
+      </p>
+      <p class="intro">{t.intro}</p>
+      <div class="actions">
+        <a class="button primary" href={pathFor(lang, "projects")}>
+          {t.explore}
+          <Icon name="arrow" />
+        </a>
+        <a class="button" href={`/cv/johan-borrero-${lang}.pdf`} download>
+          <Icon name="download" />
+          {t.cv}
+        </a>
+        <a class="hero-git" href={github} aria-label="GitHub">
+          <Icon name="github" size={21} />
+        </a>
+      </div>
+      <p class="available">
+        <i></i>
+        {t.available}
+      </p>
+    </div>
+    <Plate lang={lang} />
+  </section>
+  <dl class="metrics">
+    {t.metrics.map((label, i) => (
+      <div>
+        <dt>{label}</dt>
+        <dd>{["02", "08", "03"][i]}</dd>
+      </div>
+    ))}
+  </dl>
+</div>
+<Projects lang={lang} compact />
+<section class="wrap section">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">
+        <span>02 /</span> {t.method}
+      </p>
+      <h2>{t.domains}</h2>
+    </div>
+    <a class="textlink" href={pathFor(lang, "engineering")}>
+      {t.proof}
+      <Icon name="arrow" />
+    </a>
+  </div>
+  <div class="domains">
+    {t.competencies.map(([label, detail], i) => (
+      <div>
+        <span class="mono" aria-hidden="true">
+          0{i + 1}
+        </span>
+        <dl>
+          <dt>{label}</dt>
+          <dd>{detail}</dd>
+        </dl>
+      </div>
+    ))}
+  </div>
+</section>
+<Experience lang={lang} />
+<Contact lang={lang} />

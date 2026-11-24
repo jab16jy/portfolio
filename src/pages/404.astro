@@ -1,0 +1,29 @@
+---
+import Shell from "../layouts/Shell.astro";
+---
+
+<Shell
+  lang="es"
+  path="404"
+  title="404"
+  description="Página no encontrada · Page not found"
+  notFound
+>
+  <section class="wrap section missing">
+    <p class="eyebrow">HTTP / 404</p>
+    <h1>
+      Página no encontrada<span class="period">.</span>
+    </h1>
+    <p class="lede" lang="en">
+      Page not found.
+    </p>
+    <div class="actions">
+      <a class="button primary" href="/">
+        Volver al inicio
+      </a>
+      <a class="button" href="/en/" lang="en">
+        English home
+      </a>
+    </div>
+  </section>
+</Shell>

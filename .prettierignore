@@ -1,0 +1,8 @@
+node_modules
+dist
+.astro
+.codegraph
+test-results
+playwright-report
+package-lock.json
+docs/audit

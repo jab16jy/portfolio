@@ -1,0 +1,32 @@
+---
+import { copy, type Lang } from "../i18n/site";
+import Experience from "./Experience.astro";
+import Contact from "./Contact.astro";
+import Icon from "./Icon.astro";
+const { lang } = Astro.props as { lang: Lang };
+const t = copy[lang];
+---
+
+<section class="wrap section profile">
+  <p class="eyebrow">
+    {t.profile} / {t.location}
+  </p>
+  <h1>
+    Johan Alexander
+    <br />
+    Borrero Méndez<span class="period">.</span>
+  </h1>
+  <p class="lede">{t.profileIntro}</p>
+  <a class="button" href={`/cv/johan-borrero-${lang}.pdf`} download>
+    <Icon name="download" />
+    {t.cv}
+  </a>
+</section>
+<Experience lang={lang} />
+<section class="wrap section">
+  <p class="eyebrow">{t.profile}</p>
+  <h2>{t.education}</h2>
+  <p class="lede">{t.academic}</p>
+  <p>{t.english}</p>
+</section>
+<Contact lang={lang} />

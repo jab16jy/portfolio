@@ -1,0 +1,112 @@
+---
+import { getEntry, render } from "astro:content";
+
+interface Props {
+  lang: "es" | "en";
+}
+const { lang } = Astro.props;
+const entry = await getEntry("engineering", lang);
+if (!entry) throw new Error(`Missing engineering/${lang}`);
+const { Content, headings } = await render(entry);
+const phases = headings.filter(({ depth }) => depth === 2);
+const es = lang === "es";
+---
+
+<article class="wrap notebook" lang={lang}>
+  <header>
+    <p class="eyebrow">
+      {es ? "Cuaderno de ingeniería · Método" : "Engineering notebook · Method"}
+    </p>
+    <h1>{entry.data.title}</h1>
+    <p class="lede">{entry.data.summary}</p>
+  </header>
+  <div class="spread">
+    <nav aria-label={es ? "Fases del proceso" : "Process phases"}>
+      <p class="eyebrow">{es ? "En esta página" : "On this page"}</p>
+      <ol>
+        {phases.map(({ slug, text }) => (
+          <li>
+            <a href={`#${slug}`}>{text}</a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div class="prose">
+      <Content />
+    </div>
+  </div>
+  <footer>
+    <a class="button" href={es ? "/" : "/en/"}>
+      {es ? "Volver al inicio" : "Back to home"}
+    </a>
+  </footer>
+</article>
+
+<style>
+  .notebook {
+    color: var(--ink);
+    background: var(--paper);
+    padding-block: clamp(2rem, 6vw, 6rem);
+  }
+  header {
+    max-width: 52rem;
+  }
+  .spread {
+    margin-block: 3rem;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: minmax(10rem, 1fr) minmax(0, 3fr);
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  nav {
+    align-self: start;
+    margin-top: 2rem;
+    background: var(--panel);
+    padding: 1rem 1.25rem;
+  }
+  nav ol {
+    padding-inline-start: 1.5rem;
+  }
+  nav li + li {
+    margin-top: 0.6rem;
+  }
+  nav li::marker {
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  nav a {
+    color: var(--ink);
+  }
+  .prose {
+    max-width: 70ch;
+    overflow-wrap: anywhere;
+  }
+  .prose :global(h2) {
+    scroll-margin-top: 6rem;
+    margin-block: 2rem 1rem;
+  }
+  .prose :global(h3) {
+    margin-top: 2rem;
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+  }
+  .prose :global(blockquote) {
+    margin-inline: 0;
+    padding-inline-start: 1rem;
+    border-inline-start: 2px solid var(--accent);
+  }
+  footer {
+    border-top: 1px solid var(--line);
+    padding-top: 1.5rem;
+  }
+  .notebook :global(a:focus-visible) {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  @media (max-width: 48rem) {
+    .spread {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+</style>

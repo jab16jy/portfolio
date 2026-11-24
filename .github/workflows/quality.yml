@@ -1,0 +1,32 @@
+name: Quality
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      ASTRO_TELEMETRY_DISABLED: "1"
+      CI: "true"
+      SITE_ORIGIN: "http://127.0.0.1:4322"
+      NPM_CONFIG_AUDIT: "false"
+      NPM_CONFIG_FUND: "false"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.0
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run check
+      - run: npm run build
+      - run: npm run verify:links
+      - run: npm exec --no -- playwright install --with-deps chromium
+      - run: npm run test:e2e

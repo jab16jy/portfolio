@@ -1,0 +1,181 @@
+---
+import { copy, type Lang } from "../i18n/site";
+const { lang } = Astro.props as { lang: Lang };
+const t = copy[lang];
+// Oblique projection shared by all three layers: the same footprint, different checks.
+const project = (x: number, y: number, z: number) =>
+  `${167 + (x - y) * 1.06},${204 + (x + y) * 0.49 - z}`;
+const plane = (x: number, y: number, z: number, w: number, d: number) =>
+  [
+    project(x, y, z),
+    project(x + w, y, z),
+    project(x + w, y + d, z),
+    project(x, y + d, z),
+  ].join(" ");
+const front = (x: number, y: number, z: number, w: number, h: number) =>
+  [
+    project(x, y, z),
+    project(x + w, y, z),
+    project(x + w, y, z - h),
+    project(x, y, z - h),
+  ].join(" ");
+const side = (x: number, y: number, z: number, d: number, h: number) =>
+  [
+    project(x, y, z),
+    project(x, y + d, z),
+    project(x, y + d, z - h),
+    project(x, y, z - h),
+  ].join(" ");
+---
+
+<figure class="plate">
+  <div class="plate-head">
+    <span>FIG. 01</span>
+    <span>{t.caption.toUpperCase()}</span>
+  </div>
+  <svg viewBox="0 0 420 295" role="img" aria-label={t.flow.join(" → ")}>
+    <defs>
+      <pattern id="hatch" width="4" height="4" patternUnits="userSpaceOnUse">
+        <path
+          d="M-1 1l2-2m-1 5 4-4m-1 5 2-2"
+          stroke="currentColor"
+          opacity=".35"
+          stroke-width=".7"
+        />
+      </pattern>
+    </defs>
+    <g
+      fill="none"
+      stroke="currentColor"
+      opacity=".38"
+      stroke-width=".9"
+      stroke-dasharray="3 4"
+    >
+      {[
+        [-56, -56],
+        [-56, 56],
+        [56, -56],
+        [56, 56],
+      ].map(([x, y]) => (
+        <path d={`M${project(x, y, 155)} L${project(x, y, -27)}`} />
+      ))}
+    </g>
+    {[0, 61, 122].map((z, i) => (
+      <g stroke="currentColor" stroke-width="1.2" stroke-linejoin="round">
+        <polygon points={front(-56, 56, z, 112, 9)} fill="var(--face)" />
+        <polygon points={side(56, -56, z, 112, 9)} fill="var(--panel)" />
+        <polygon points={side(56, -56, z, 112, 9)} fill="url(#hatch)" />
+        <polygon
+          points={plane(-56, -56, z, 112, 112)}
+          fill={i === 2 ? "var(--drawing-accent)" : "var(--paper)"}
+        />
+        {i === 0 &&
+          [-28, 0, 28].map((k) => (
+            <g opacity=".62">
+              <path
+                d={`M${project(k, -56, z)} L${project(k, 56, z)} M${project(-56, k, z)} L${project(56, k, z)}`}
+              />
+            </g>
+          ))}
+        {i === 1 &&
+          [
+            [-33, -32],
+            [-33, 11],
+            [11, -32],
+            [11, 11],
+          ].map(([x, y]) => (
+            <g>
+              <polygon
+                points={plane(x, y, z + 4, 24, 24)}
+                fill="var(--paper)"
+              />
+              <path
+                d={`M${project(x, y + 24, z + 4)} L${project(x, y + 24, z)} L${project(x + 24, y + 24, z)} L${project(x + 24, y, z)} L${project(x + 24, y, z + 4)}`}
+                fill="none"
+              />
+            </g>
+          ))}
+        {i === 2 && (
+          <g>
+            <polygon
+              points={plane(-43, -43, z, 86, 86)}
+              fill="none"
+              stroke-dasharray="3 3"
+            />
+            <g
+              transform="matrix(1.06 .49 -1.06 .49 167 82)"
+              fill="none"
+              stroke-width="3.6"
+            >
+              <path d="m-16-10-11 11 11 11m32-22 11 11-11 11M5-17-5 17" />
+            </g>
+          </g>
+        )}
+      </g>
+    ))}
+    {t.flow.map((label, i) => (
+      <g>
+        <path
+          d={`M${233 - i * 3} ${81 + i * 61}h20l12 -12h21`}
+          stroke="currentColor"
+          stroke-width=".9"
+          fill="none"
+        />
+        <circle cx={233 - i * 3} cy={81 + i * 61} r="2.5" fill="currentColor" />
+        <text
+          x="293"
+          y={73 + i * 61}
+          fill="currentColor"
+          font-family="var(--mono)"
+          font-size="10.5"
+        >{`0${i + 1} / ${label}`}</text>
+      </g>
+    ))}
+  </svg>
+  <figcaption>
+    <span>JAB / ENG</span>
+    <span>
+      {lang === "es" ? "VISTA EXPLOTADA" : "EXPLODED VIEW"} <b>↗</b>
+    </span>
+  </figcaption>
+</figure>
+<style>
+  .plate {
+    position: relative;
+    margin: 0;
+    align-self: center;
+    border: 1px solid var(--line);
+    background-color: var(--panel);
+    background-image: radial-gradient(var(--grid) 0.85px, transparent 0.9px);
+    background-size: 14px 14px;
+    padding: 15px 18px 12px;
+    color: var(--ink);
+  }
+  .plate-head,
+  figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font: 500 10px/1.4 var(--mono);
+    letter-spacing: 0.09em;
+  }
+  .plate-head span:first-child {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 7px;
+  }
+  .plate svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 8px 0 0;
+  }
+  .plate figcaption {
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+    color: var(--muted);
+  }
+  figcaption b {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Shell from "../layouts/Shell.astro";
+import Home from "../components/Home.astro";
+import Projects from "../components/Projects.astro";
+import Engineering from "../components/Engineering.astro";
+import CaseStudy from "../components/CaseStudy.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+import { sections, copy, type Lang } from "../i18n/site";
+interface Props {
+  lang: Lang;
+  path: string;
+  entry?: CollectionEntry<"projects">;
+}
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return (["es", "en"] as const).flatMap((lang) => {
+    const paths: Props[] = [
+      ...sections.map((path) => ({ lang, path })),
+      ...projects
+        .filter((p) => p.id.startsWith(lang + "/"))
+        .map((entry) => ({
+          lang,
+          path: `projects/${entry.id.split("/")[1]}`,
+          entry,
+        })),
+    ];
+    return paths.map((props) => ({
+      params: {
+        route:
+          [lang === "en" ? "en" : "", props.path].filter(Boolean).join("/") ||
+          undefined,
+      },
+      props,
+    }));
+  });
+}
+const { lang, path, entry } = Astro.props;
+const t = copy[lang];
+const title =
+  entry?.data.title ||
+  (!path ? t.folio : t.nav[sections.findIndex((s) => s === path)]);
+const description =
+  entry?.data.summary ||
+  ({
+    "": t.intro,
+    projects: t.projectsLead,
+    about: t.profileIntro,
+    contact: t.contactText,
+    engineering:
+      lang === "es"
+        ? "De los criterios de aceptación a la entrega: decisiones y evidencias de desarrollo asistido por IA."
+        : "From acceptance criteria to delivery: decisions and evidence from AI-assisted development.",
+  }[path] ??
+    t.intro);
+---
+
+<Shell {lang} {path} {title} {description}>
+  {entry ? (
+    <CaseStudy {lang} {entry} />
+  ) : path === "projects" ? (
+    <Projects {lang} />
+  ) : path === "about" ? (
+    <About {lang} />
+  ) : path === "engineering" ? (
+    <Engineering {lang} />
+  ) : path === "contact" ? (
+    <Contact {lang} page />
+  ) : (
+    <Home {lang} />
+  )}
+</Shell>

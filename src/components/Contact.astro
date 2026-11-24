@@ -1,0 +1,25 @@
+---
+import { copy, email, github, type Lang } from "../i18n/site";
+import Icon from "./Icon.astro";
+const { lang, page = false } = Astro.props as { lang: Lang; page?: boolean };
+const t = copy[lang];
+---
+
+<section class="wrap section contact">
+  <div>
+    <p class="eyebrow">
+      <span>04 /</span> {t.nav[4]}
+    </p>
+    {page ? <h1>{t.contact}</h1> : <h2>{t.contact}</h2>}
+    <p class="lede">{t.contactText}</p>
+  </div>
+  <div class="contact-links">
+    <a class="button primary" href={`mailto:${email}`}>
+      <Icon name="mail" />
+      {email}
+    </a>
+    <a class="textlink" href={github}>
+      GitHub <Icon name="out" />
+    </a>
+  </div>
+</section>

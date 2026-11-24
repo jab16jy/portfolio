@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+  <meta charset="utf-8" />
+  <title>Johan Alexander Borrero Méndez | CV</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font:
+        11pt/1.38 Arial,
+        sans-serif;
+      color: #242321;
+    }
+    main {
+      width: 210mm;
+      height: 297mm;
+      padding: 16mm 18mm;
+      background: white;
+    }
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+    h1 {
+      font:
+        bold 26pt/1.12 Georgia,
+        serif;
+      letter-spacing: -0.65pt;
+    }
+    header > p:first-of-type {
+      margin: 4pt 0 7pt;
+      font-weight: bold;
+    }
+    header address {
+      font-size: 10.5pt;
+      font-style: normal;
+    }
+    a {
+      color: #843523;
+      text-underline-offset: 2pt;
+    }
+    h2 {
+      display: flex;
+      gap: 10pt;
+      align-items: center;
+      color: #843523;
+      margin: 14pt 0 7pt;
+      font:
+        bold 10.5pt/1.15 Arial,
+        sans-serif;
+      letter-spacing: 0.9pt;
+      text-transform: uppercase;
+    }
+    h2::after {
+      content: "";
+      flex: 1;
+      border-top: 0.6pt solid #bdb6af;
+    }
+    h3 {
+      font:
+        bold 12pt/1.25 Arial,
+        sans-serif;
+      margin-bottom: 2pt;
+    }
+    time,
+    small {
+      font:
+        normal 10pt/1.25 Arial,
+        sans-serif;
+      color: #4c4946;
+    }
+    article + article {
+      margin-top: 8pt;
+    }
+    article p {
+      margin-top: 2pt;
+    }
+    .entry {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 3pt;
+    }
+    @media screen {
+      body {
+        background: #eae6e0;
+      }
+      main {
+        margin: 10px auto;
+      }
+    }
+  </style>
+  <main lang="es">
+    <header>
+      <h1>Johan Alexander Borrero Méndez</h1>
+      <p>Desarrollador de software · Ingeniería de software asistida por IA</p>
+      <address>
+        Soledad, Atlántico, Colombia · Disponibilidad presencial, híbrida y
+        remota<br />
+        <a href="mailto:johanbm0609@gmail.com">johanbm0609@gmail.com</a> ·
+        <a href="https://github.com/jab16jy">github.com/jab16jy</a>
+      </address>
+    </header>
+    <section>
+      <h2>Perfil</h2>
+      <p>
+        Desarrollo software para operaciones de caja e inventario con apoyo de
+        agentes de IA. Defino reglas de negocio y criterios de aceptación,
+        reviso los cambios propuestos y contrasto el resultado con pruebas antes
+        de aceptar una entrega.
+      </p>
+    </section>
+    <section>
+      <h2>Experiencia</h2>
+      <article>
+        <div class="entry">
+          <h3>Desarrollador de software independiente</h3>
+          <small>Ago – nov 2026</small>
+        </div>
+        <p>
+          Desarrollo por encargo de Inventory Tally y Sistema POS, dos productos
+          comercializados y en producción.
+        </p>
+      </article>
+      <article>
+        <div class="entry">
+          <h3>Auxiliar de soporte TI · Albacea S.A.S.</h3>
+          <small>Ene – ago 2026 · 8 meses</small>
+        </div>
+        <p>
+          Soporte tecnológico, consulta y actualización de bases de datos,
+          gestión de registros y organización de información operativa.
+        </p>
+      </article>
+    </section>
+    <section>
+      <h2>Proyectos seleccionados</h2>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/inventory-tally"
+            >Inventory Tally</a
+          >
+          <small>· TypeScript, React, Firebase</small>
+        </h3>
+        <p>
+          PWA de conteo por sucursal. El teléfono guarda el aporte de cada
+          cajero; el servidor aplica solo la diferencia para no duplicar
+          unidades al sincronizar.
+        </p>
+      </article>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/Sistema_Pos">Sistema POS</a>
+          <small>· C#, WPF, SQLite</small>
+        </h3>
+        <p>
+          Punto de venta para Windows. Una prueba de escrituras simultáneas
+          verifica que un ajuste rechazado no cambie el saldo ni deje un
+          movimiento en el historial.
+        </p>
+      </article>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/techcamp-v2">TechCamp v2</a>
+          <small>· Python, FastAPI, React</small>
+        </h3>
+        <p>
+          Demostrador de seminario. Una prueba simula una parcela sin riego y
+          comprueba que la aplicación recomiende conservar humedad. El impacto
+          en finca no se ha medido.
+        </p>
+      </article>
+    </section>
+    <section>
+      <h2>Formación e idiomas</h2>
+      <h3>Ingeniería de Sistemas · Institución Universitaria Americana</h3>
+      <p>
+        Octavo semestre finalizado. Noveno semestre en 2027.<br />Inglés: B1.
+      </p>
+    </section>
+  </main>
+  <main lang="en">
+    <header>
+      <h1>Johan Alexander Borrero Méndez</h1>
+      <p>Software Developer · AI-Assisted Software Engineering</p>
+      <address>
+        Soledad, Atlántico, Colombia · Available for on-site, hybrid and remote
+        roles<br />
+        <a href="mailto:johanbm0609@gmail.com">johanbm0609@gmail.com</a> ·
+        <a href="https://github.com/jab16jy">github.com/jab16jy</a>
+      </address>
+    </header>
+    <section>
+      <h2>Profile</h2>
+      <p>
+        I develop software for checkout and inventory operations with the help
+        of AI agents. I define business rules and acceptance criteria, review
+        proposed changes, and check test results before accepting a delivery.
+      </p>
+    </section>
+    <section>
+      <h2>Experience</h2>
+      <article>
+        <div class="entry">
+          <h3>Freelance Software Developer</h3>
+          <small>Aug – Nov 2026</small>
+        </div>
+        <p>
+          Developed Inventory Tally and Sistema POS on commission. Both are
+          commercial products in production.
+        </p>
+      </article>
+      <article>
+        <div class="entry">
+          <h3>IT Support Assistant · Albacea S.A.S.</h3>
+          <small>Jan – Aug 2026 · 8 months</small>
+        </div>
+        <p>
+          Provided technical support, queried and updated databases, maintained
+          records and organized operational information.
+        </p>
+      </article>
+    </section>
+    <section>
+      <h2>Selected projects</h2>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/inventory-tally"
+            >Inventory Tally</a
+          >
+          <small>· TypeScript, React, Firebase</small>
+        </h3>
+        <p>
+          Stocktaking PWA for branch teams. Each phone records one cashier’s
+          count; the server applies only the difference so syncing does not
+          count units twice.
+        </p>
+      </article>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/Sistema_Pos">Sistema POS</a>
+          <small>· C#, WPF, SQLite</small>
+        </h3>
+        <p>
+          Windows point-of-sale application. A concurrent-write test checks that
+          a rejected adjustment neither changes the stock balance nor adds an
+          entry to its history.
+        </p>
+      </article>
+      <article>
+        <h3>
+          <a href="https://github.com/jab16jy/techcamp-v2">TechCamp v2</a>
+          <small>· Python, FastAPI, React</small>
+        </h3>
+        <p>
+          Academic seminar project. A test simulates a rainfed plot and checks
+          that the app recommends conserving soil moisture. Field impact has not
+          been measured.
+        </p>
+      </article>
+    </section>
+    <section>
+      <h2>Education and languages</h2>
+      <h3>Systems Engineering · Institución Universitaria Americana</h3>
+      <p>
+        Eighth semester completed. Ninth semester in 2027.<br />English: B1.
+      </p>
+    </section>
+  </main>
+</html>

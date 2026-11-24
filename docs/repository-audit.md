@@ -1,0 +1,11 @@
+# Auditoría de repositorios — 24 de noviembre de 2026
+
+La unidad de evidencia es una revisión identificable, no el nombre de una herramienta. Se contrastaron tres checkouts locales con GitHub. Los informes enlazan archivos, líneas, tags, trabajos de CI y límites de la inspección. No se ejecutaron las suites locales de los productos en esta entrega.
+
+| Proyecto y revisión                                    | Hallazgo que organiza el caso                                                                                    | Alcance                                                                                                                               |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| [Inventory Tally · 13ed74eb](audit/inventory-tally.md) | Los aportes por persona y área se consolidan por diferencia, no sumando de nuevo el valor completo del teléfono. | PWA comercial. El job de la versión y el de un cambio documental no ejecutan los mismos pasos. Captura de acceso público, sin sesión. |
+| [Sistema POS · 22de6e5f](audit/sistema-pos.md)         | Ante escrituras concurrentes, saldo e historial deben seguir siendo coherentes.                                  | Escritorio comercial. Prueba específica con SQLite y evidencia de CI en Windows; sin foto de una instalación de cliente.              |
+| [TechCamp v2 · 29def038](audit/techcamp.md)            | El escenario de secano conecta el balance hídrico con una recomendación sin riego.                               | Seminario académico. Un escenario simulado reproducible no mide impacto en finca.                                                     |
+
+Estado comercial, fechas, formación, disponibilidad y responsabilidades profesionales: declaración del titular. Las fuentes técnicas respaldan el comportamiento del software, no certifican clientes, ingresos ni autoría manual. No se publican números de clientes, cobertura global ni un estado permanente de los pipelines.

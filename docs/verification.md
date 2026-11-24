@@ -1,6 +1,6 @@
 # Informe de entrega · 24 de noviembre de 2026
 
-**Resultado:** sitio estático bilingüe verificado en Windows con Node 24.18.0 y npm 12.0.2. No se publicó en un proveedor, no se creó un repositorio remoto y no se ejecutó GitHub Actions para este portafolio. Las verificaciones siguientes son locales sobre la salida de Astro con `SITE_ORIGIN=http://127.0.0.1:4322`.
+**Resultado:** sitio estático bilingüe verificado en Windows con Node 24.18.0 y npm 12.0.2, publicado en el repositorio público [jab16jy/portfolio](https://github.com/jab16jy/portfolio). No se desplegó en un proveedor de páginas. Las verificaciones locales siguientes corresponden a la salida de Astro con `SITE_ORIGIN=http://127.0.0.1:4322`; CI se registra abajo por separado.
 
 ## Controles ejecutados
 
@@ -24,6 +24,8 @@ Lighthouse CLI 13.6.0, Chrome for Testing y servidor local de preview del build 
 Informes de esta ejecución: `test-results/lighthouse-mobile.json` y `test-results/lighthouse-desktop.json`. Son artefactos locales: Playwright limpia su directorio de resultados en la siguiente ejecución. Para repetir, servir `npm run preview -- --host 127.0.0.1 --port 4322` y en otra consola ejecutar `npx --yes lighthouse@13.6.0 http://127.0.0.1:4322/ --only-categories=performance,accessibility,best-practices,seo --chrome-flags=--headless`. Para escritorio añadir `--preset=desktop`.
 
 ## Recursos, límites y publicación
+
+La acción de calidad del [primer push](https://github.com/jab16jy/portfolio/actions/runs/45507857726) pasó instalación, formato, lint, tipos, build, verificador de enlaces y pruebas E2E. Ese run señaló que `checkout@v4` y `setup-node@v4` usaban runtimes Node 20 en proceso de retirada. Se actualizaron a las versiones v6 antes de la publicación final; el resultado del run final aparece en la página Actions del repositorio.
 
 Las tres imágenes son auténticas: **Inventory Tally**, acceso público sin sesión; **Sistema POS**, vista de inventario WPF compilada en Release con cuatro productos ficticios y sin acceso a la base operativa; **TechCamp**, tarjeta React original con un fixture de secano. Una captura de componente no acredita una sesión completa. Las fuentes, revisiones y condiciones de reproducción están en la [auditoría](repository-audit.md).
 

@@ -25,7 +25,7 @@ Informes de esta ejecución: `test-results/lighthouse-mobile.json` y `test-resul
 
 ## Recursos, límites y publicación
 
-La acción de calidad del [primer push](https://github.com/jab16jy/portfolio/actions/runs/45507857726) pasó instalación, formato, lint, tipos, build, verificador de enlaces y pruebas E2E. Ese run señaló que `checkout@v4` y `setup-node@v4` usaban runtimes Node 20 en proceso de retirada. Se actualizaron a las versiones v6 antes de la publicación final; el resultado del run final aparece en la página Actions del repositorio.
+La acción de calidad del [primer push](https://github.com/jab16jy/portfolio/actions/runs/45507857726) pasó instalación, formato, lint, tipos, build, verificador de enlaces y pruebas E2E. Ese run señaló que `checkout@v4` y `setup-node@v4` usaban runtimes Node 20 en proceso de retirada. Se actualizaron a las versiones v6. El [run final](https://github.com/jab16jy/portfolio/actions/runs/45508254093) pasó todos los mismos pasos en GitHub Actions con las versiones actuales, sin esa advertencia.
 
 Las tres imágenes son auténticas: **Inventory Tally**, acceso público sin sesión; **Sistema POS**, vista de inventario WPF compilada en Release con cuatro productos ficticios y sin acceso a la base operativa; **TechCamp**, tarjeta React original con un fixture de secano. Una captura de componente no acredita una sesión completa. Las fuentes, revisiones y condiciones de reproducción están en la [auditoría](repository-audit.md).
 
